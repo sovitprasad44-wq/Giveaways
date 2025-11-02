@@ -1,0 +1,2371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - Weekly Winner Access</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #2d3436;
+        }
+
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-box {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 30px;
+            padding: 60px 50px;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
+            max-width: 480px;
+            width: 100%;
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 45px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-logo {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 45px;
+            color: white;
+            margin: 0 auto 25px;
+            box-shadow: 0 15px 40px rgba(0, 184, 148, 0.5);
+            position: relative;
+            animation: floatLogo 3s ease-in-out infinite;
+        }
+
+        @keyframes floatLogo {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .login-logo i {
+            animation: rotateLogo 20s linear infinite;
+        }
+
+        @keyframes rotateLogo {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .login-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: #2d3436;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .login-subtitle {
+            color: #636e72;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .form-group {
+            margin-bottom: 28px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            color: #2d3436;
+            margin-bottom: 12px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-label i {
+            color: #667eea;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 18px 24px;
+            padding-right: 90px;
+            border: 3px solid #e8eaf0;
+            border-radius: 15px;
+            font-size: 16px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+            font-weight: 500;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 11px;
+            color: white;
+            user-select: none;
+            padding: 8px 16px;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .toggle-password:hover {
+            background: linear-gradient(135deg, #764ba2, #667eea);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .toggle-password:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            font-size: 14px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #2d3436;
+            transition: all 0.3s ease;
+        }
+
+        .remember-me:hover {
+            color: #667eea;
+        }
+
+        .remember-me input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .login-btn:hover::before {
+            left: 100%;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.6);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .error-message {
+            background: linear-gradient(135deg, #ffe5e5, #ffd5d5);
+            color: #e74c3c;
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            border-left: 5px solid #e74c3c;
+            display: none;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, #e8f8f5, #d5f5ec);
+            color: #00b894;
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            border-left: 5px solid #00b894;
+            display: none;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .dashboard-container {
+            display: none;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.95), rgba(118, 75, 162, 0.95));
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(15px);
+        }
+
+        .loading-overlay.show {
+            display: flex;
+        }
+
+        .loading-content {
+            text-align: center;
+            color: white;
+        }
+
+        .loading-spinner {
+            width: 70px;
+            height: 70px;
+            border: 5px solid rgba(255, 255, 255, 0.2);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 25px;
+        }
+
+        .loading-text {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            padding: 15px 25px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .left-section {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 6px 18px rgba(0, 184, 148, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .logo-icon:hover {
+            transform: rotate(360deg) scale(1.1);
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 800;
+            color: white;
+            letter-spacing: 0.5px;
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .menu-btn {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-btn:hover {
+            background: rgba(255, 255, 255, 0.35);
+            transform: scale(1.08);
+        }
+
+        .user-info {
+            background: rgba(255, 255, 255, 0.25);
+            padding: 10px 20px;
+            border-radius: 25px;
+            color: white;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .drawer {
+            position: fixed;
+            top: 0;
+            left: -450px;
+            width: 450px;
+            height: 100%;
+            background: white;
+            box-shadow: 10px 0 40px rgba(0, 0, 0, 0.3);
+            z-index: 2000;
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+        }
+
+        .drawer.open {
+            left: 0;
+        }
+
+        .drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 1999;
+            display: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .drawer-overlay.show {
+            display: block;
+        }
+
+        .drawer-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 40px 30px;
+            color: white;
+            position: relative;
+        }
+
+        .drawer-close {
+            position: absolute;
+            top: 20px;
+            left: 25px;
+            font-size: 28px;
+            cursor: pointer;
+            color: white;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .drawer-close:hover {
+            transform: rotate(90deg);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .drawer-user-info {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .drawer-avatar {
+            width: 90px;
+            height: 90px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 18px;
+            border: 4px solid white;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .drawer-user-name {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .drawer-user-email {
+            font-size: 14px;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+
+        .drawer-content {
+            padding: 0;
+        }
+
+        .drawer-section {
+            padding: 25px 30px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .drawer-section-title {
+            font-size: 16px;
+            font-weight: 800;
+            color: #2d3436;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .drawer-section-title i {
+            color: #667eea;
+            font-size: 18px;
+        }
+
+        .drawer-profile-section {
+            padding: 25px 30px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .drawer-profile-item {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 16px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.08), rgba(118, 75, 162, 0.08));
+            border-radius: 15px;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .drawer-profile-item:hover {
+            transform: translateX(5px);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+
+        .drawer-profile-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .drawer-profile-info {
+            flex: 1;
+        }
+
+        .drawer-profile-label {
+            font-size: 11px;
+            color: #636e72;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 4px;
+            font-weight: 700;
+        }
+
+        .drawer-profile-value {
+            font-size: 15px;
+            font-weight: 700;
+            color: #2d3436;
+        }
+
+        .drawer-earnings-card {
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            color: white;
+            margin-bottom: 12px;
+            box-shadow: 0 10px 30px rgba(0, 184, 148, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .drawer-earnings-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .drawer-earnings-label {
+            font-size: 12px;
+            opacity: 0.95;
+            margin-bottom: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .drawer-earnings-value {
+            font-size: 42px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .drawer-balance-card {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            color: white;
+            margin-bottom: 12px;
+            box-shadow: 0 10px 30px rgba(243, 156, 18, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .drawer-balance-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .drawer-balance-label {
+            font-size: 12px;
+            opacity: 0.95;
+            margin-bottom: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .drawer-balance-value {
+            font-size: 42px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .drawer-stat-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .drawer-stat-item {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .drawer-stat-item:hover {
+            transform: translateY(-5px);
+            border-color: rgba(102, 126, 234, 0.3);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .drawer-stat-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: #667eea;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .drawer-stat-label {
+            font-size: 12px;
+            color: #636e72;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .drawer-history-list {
+            max-height: 320px;
+            overflow-y: auto;
+        }
+
+        .drawer-history-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .drawer-history-list::-webkit-scrollbar-track {
+            background: #f1f3f5;
+            border-radius: 10px;
+        }
+
+        .drawer-history-list::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 10px;
+        }
+
+        .drawer-history-item {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .drawer-history-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .drawer-history-date {
+            font-size: 13px;
+            color: #636e72;
+            margin-bottom: 6px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .drawer-history-amount {
+            font-size: 20px;
+            font-weight: 800;
+            color: #00b894;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .drawer-logout-btn {
+            width: calc(100% - 60px);
+            margin: 30px 30px 40px;
+            padding: 18px;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.3);
+        }
+
+        .drawer-logout-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(231, 76, 60, 0.4);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 35px 25px;
+        }
+
+        .welcome-banner {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
+            border-radius: 25px;
+            padding: 40px;
+            margin-bottom: 35px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-banner::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-radius: 50%;
+        }
+
+        .welcome-title {
+            font-size: 36px;
+            font-weight: 800;
+            color: #2d3436;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+            letter-spacing: -0.5px;
+        }
+
+        .welcome-subtitle {
+            color: #636e72;
+            font-size: 17px;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 28px;
+            margin-bottom: 35px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 25px;
+            padding: 35px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.03), rgba(118, 75, 162, 0.03));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 35px 70px rgba(0, 0, 0, 0.18);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .card-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .card-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #2d3436;
+            letter-spacing: -0.3px;
+        }
+
+        .card-subtitle {
+            font-size: 14px;
+            color: #636e72;
+            margin-top: 6px;
+            font-weight: 600;
+        }
+
+        .stat-number {
+            font-size: 52px;
+            font-weight: 900;
+            color: #00b894;
+            margin-bottom: 12px;
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-label {
+            color: #636e72;
+            font-size: 17px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        .status-card {
+            text-align: center;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            margin-right: 12px;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 0 0 rgba(0, 184, 148, 0.7);
+        }
+
+        .status-active {
+            background: #00b894;
+            box-shadow: 0 0 25px rgba(0, 184, 148, 0.6);
+        }
+
+        .status-inactive {
+            background: #e74c3c;
+            box-shadow: 0 0 25px rgba(231, 76, 60, 0.6);
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                transform: scale(1); 
+                opacity: 1; 
+                box-shadow: 0 0 0 0 rgba(0, 184, 148, 0.7);
+            }
+            50% { 
+                transform: scale(1.15); 
+                opacity: 0.9; 
+                box-shadow: 0 0 0 10px rgba(0, 184, 148, 0);
+            }
+        }
+
+        .countdown-section {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 25px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
+            margin-bottom: 35px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .countdown-section::before {
+            content: '';
+            position: absolute;
+            bottom: -150px;
+            left: -150px;
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.08), rgba(118, 75, 162, 0.08));
+            border-radius: 50%;
+        }
+
+        .countdown-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: #2d3436;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .countdown-item {
+            background: linear-gradient(135deg, #2d3436, #636e72);
+            color: white;
+            padding: 25px;
+            border-radius: 18px;
+            min-width: 100px;
+            box-shadow: 0 12px 30px rgba(45, 52, 54, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .countdown-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .countdown-item:hover::before {
+            left: 100%;
+        }
+
+        .countdown-item:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(45, 52, 54, 0.5);
+        }
+
+        .countdown-number {
+            display: block;
+            font-size: 42px;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .countdown-text {
+            display: block;
+            font-size: 12px;
+            margin-top: 8px;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 24px;
+            border: none;
+            border-radius: 18px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .action-btn:hover::before {
+            left: 100%;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 18px 40px rgba(102, 126, 234, 0.5);
+        }
+
+        .action-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .action-btn.success {
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            box-shadow: 0 12px 30px rgba(0, 184, 148, 0.4);
+        }
+
+        .action-btn.success:hover {
+            box-shadow: 0 18px 40px rgba(0, 184, 148, 0.5);
+        }
+
+        .action-btn.warning {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            box-shadow: 0 12px 30px rgba(243, 156, 18, 0.4);
+        }
+
+        .action-btn.warning:hover {
+            box-shadow: 0 18px 40px rgba(243, 156, 18, 0.5);
+        }
+
+        .action-btn.info {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            box-shadow: 0 12px 30px rgba(52, 152, 219, 0.4);
+        }
+
+        .action-btn.info:hover {
+            box-shadow: 0 18px 40px rgba(52, 152, 219, 0.5);
+        }
+
+        .btn-spinner {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 10px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 1000;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 25px;
+            padding: 45px;
+            max-width: 550px;
+            width: 90%;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4);
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .modal-title {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 25px;
+            color: #2d3436;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .modal-body {
+            text-align: center;
+            color: #636e72;
+            line-height: 1.8;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .close {
+            position: absolute;
+            top: 18px;
+            right: 25px;
+            font-size: 32px;
+            cursor: pointer;
+            color: #636e72;
+            transition: all 0.3s ease;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .close:hover {
+            color: #e74c3c;
+            background: rgba(231, 76, 60, 0.1);
+            transform: rotate(90deg);
+        }
+
+        .notification-banner {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 18px;
+            text-align: center;
+            font-weight: 700;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            animation: slideDown 0.5s ease-out;
+            box-shadow: 0 8px 20px rgba(243, 156, 18, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stats-overview {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
+            margin-bottom: 35px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 25px 15px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.08), rgba(118, 75, 162, 0.08));
+            border-radius: 18px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            border-color: rgba(102, 126, 234, 0.3);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: 800;
+            color: #667eea;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            word-break: break-word;
+        }
+
+        .stat-text {
+            font-size: 13px;
+            color: #636e72;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1.4;
+        }
+
+        .offline-banner {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: 700;
+            display: none;
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+        }
+
+        .offline-banner.show {
+            display: block;
+        }
+
+                    @media (max-width: 768px) {
+            .login-box {
+                padding: 40px 30px;
+            }
+
+            .drawer {
+                width: 100%;
+                left: -100%;
+            }
+
+            .header-content {
+                flex-direction: row;
+                gap: 15px;
+                text-align: left;
+            }
+
+            .user-section {
+                flex-direction: row;
+                width: auto;
+            }
+
+            .user-info {
+                display: none;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .countdown-timer {
+                gap: 18px;
+            }
+
+            .countdown-item {
+                min-width: 80px;
+                padding: 20px;
+            }
+
+            .countdown-number {
+                font-size: 32px;
+            }
+
+            .card {
+                padding: 25px;
+            }
+
+            .welcome-title {
+                font-size: 28px;
+            }
+
+            .logo-text {
+                font-size: 18px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .drawer-section {
+                padding: 20px 25px;
+            }
+
+            .drawer-earnings-value,
+            .drawer-balance-value {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text"><i class="fas fa-sync fa-spin"></i> Loading Dashboard...</div>
+        </div>
+    </div>
+
+    <!-- Offline Banner -->
+    <div class="offline-banner" id="offline-banner">
+        <i class="fas fa-exclamation-triangle"></i> No internet connection. Please check your network.
+    </div>
+
+    <!-- Login Container -->
+    <div class="login-container" id="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <div class="login-logo">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h1 class="login-title">Welcome Back</h1>
+                <p class="login-subtitle">Login to access your dashboard</p>
+            </div>
+
+            <div class="error-message" id="login-error"></div>
+            <div class="success-message" id="login-success"></div>
+
+            <form id="login-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-envelope"></i>
+                        Email Address
+                    </label>
+                    <input type="email" class="form-input" id="login-email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-lock"></i>
+                        Password
+                    </label>
+                    <div class="password-wrapper">
+                        <input type="password" class="form-input" id="login-password" placeholder="Enter your password" required>
+                        <span class="toggle-password" onclick="togglePassword()">
+                            <i class="fas fa-eye" id="toggle-icon"></i>
+                            <span id="toggle-text">Show</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="remember-forgot">
+                    <label class="remember-me">
+                        <input type="checkbox" id="remember-me">
+                        <span><i class="fas fa-check-circle"></i> Remember me</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="login-btn" id="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container" id="dashboard-container">
+        <div class="header">
+            <div class="header-content">
+                <div class="left-section">
+                    <button class="menu-btn" onclick="toggleDrawer()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="logo-text">Weekly Winner</div>
+                    </div>
+                </div>
+                <div class="user-section">
+                    <div class="user-info">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="user-email-display">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div id="notification-banner" class="notification-banner" style="display: none;">
+                <i class="fas fa-bell"></i>
+                <span id="notification-text"></span>
+            </div>
+
+            <div class="welcome-banner">
+                <h1 class="welcome-title">
+                    <i class="fas fa-hand-sparkles"></i>
+                    Welcome, <span id="user-name">User</span>!
+                </h1>
+                <p class="welcome-subtitle">
+                    <i class="fas fa-chart-line"></i>
+                    Track your registrations and earnings in real-time
+                </p>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <div>
+                            <div class="card-title">Registration Status</div>
+                            <div class="card-subtitle">Current Week Status</div>
+                        </div>
+                    </div>
+                    <div id="registration-status">
+                        <span class="status-indicator status-inactive" id="status-indicator"></span>
+                        <span id="status-text"><i class="fas fa-times-circle"></i> Not Registered</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <div>
+                            <div class="card-title">Available Spots</div>
+                            <div class="card-subtitle">Remaining Registrations</div>
+                        </div>
+                    </div>
+                    <span class="stat-number"><i class="fas fa-users"></i> <span id="available-spots">5</span></span>
+                    <span class="stat-label">Out of <span id="max-spots">5</span> Total</span>
+                </div>
+
+                <div class="card status-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div>
+                            <div class="card-title">System Status</div>
+                            <div class="card-subtitle">Registration System</div>
+                        </div>
+                    </div>
+                    <div id="system-status">
+                        <span class="status-indicator status-active" id="system-indicator"></span>
+                        <span id="system-text"><i class="fas fa-check-circle"></i> Active</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-overview">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <div>
+                        <div class="card-title">Quick Stats</div>
+                        <div class="card-subtitle">Your Performance Overview</div>
+                    </div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">
+                            <i class="fas fa-clipboard-check"></i>
+                            <span id="total-registrations">0</span>
+                        </div>
+                        <div class="stat-text">Total<br>Registrations</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">
+                            <i class="fas fa-rupee-sign"></i><span id="this-week-earnings">0</span>
+                        </div>
+                        <div class="stat-text">This Week</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">
+                            <i class="fas fa-percentage"></i>
+                            <span id="success-rate">0</span>
+                        </div>
+                        <div class="stat-text">Success Rate</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" style="font-size: 20px; flex-wrap: wrap;">
+                            <i class="fas fa-calendar-check" style="font-size: 24px;"></i>
+                            <span id="last-registration">Never</span>
+                        </div>
+                        <div class="stat-text">Last<br>Registration</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="countdown-section">
+                <div class="countdown-title">
+                    <i class="fas fa-clock"></i>
+                    Next Registration Opens In
+                </div>
+                <div class="countdown-timer" id="countdown-timer">
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="days">0</span>
+                        <span class="countdown-text">Days</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="hours">0</span>
+                        <span class="countdown-text">Hours</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="minutes">0</span>
+                        <span class="countdown-text">Minutes</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="seconds">0</span>
+                        <span class="countdown-text">Seconds</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <button class="action-btn success" onclick="registerUser()" id="register-btn">
+                    <i class="fas fa-bullseye"></i> Register Now
+                </button>
+                <button class="action-btn" onclick="checkStatus()">
+                    <i class="fas fa-chart-bar"></i> Check Status
+                </button>
+                <button class="action-btn warning" onclick="viewRewards()">
+                    <i class="fas fa-trophy"></i> View Rewards
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Drawer -->
+    <div class="drawer-overlay" id="drawer-overlay" onclick="toggleDrawer()"></div>
+    <div class="drawer" id="drawer">
+        <div class="drawer-header">
+            <span class="drawer-close" onclick="toggleDrawer()">
+                <i class="fas fa-times"></i>
+            </span>
+            <div class="drawer-user-info">
+                <div class="drawer-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="drawer-user-name" id="drawer-user-name">User</div>
+                <div class="drawer-user-email" id="drawer-user-email">user@example.com</div>
+            </div>
+        </div>
+
+        <div class="drawer-content">
+            <div class="drawer-profile-section">
+                <div class="drawer-section-title">
+                    <i class="fas fa-sack-dollar"></i>
+                    Total Earnings
+                </div>
+                <div class="drawer-earnings-card">
+                    <div class="drawer-earnings-label">Your Total Earnings By Registration</div>
+                    <div class="drawer-earnings-value">
+                        <i class="fas fa-rupee-sign"></i>
+                        <span id="drawer-total-earnings-main">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="drawer-profile-section">
+                <div class="drawer-section-title">
+                    <i class="fas fa-wallet"></i>
+                    Total Balance
+                </div>
+                <div class="drawer-balance-card">
+                    <div class="drawer-balance-label">Your Total Balance</div>
+                    <div class="drawer-balance-value">
+                        <i class="fas fa-rupee-sign"></i>
+                        <span id="drawer-balance-main">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="drawer-profile-section">
+                <div class="drawer-section-title">
+                    <i class="fas fa-user-alt"></i>
+                    My Profile
+                </div>
+                <div class="drawer-profile-item">
+                    <div class="drawer-profile-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="drawer-profile-info">
+                        <div class="drawer-profile-label">Email Address</div>
+                        <div class="drawer-profile-value" id="drawer-profile-email">user@example.com</div>
+                    </div>
+                </div>
+                <div class="drawer-profile-item">
+                    <div class="drawer-profile-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="drawer-profile-info">
+                        <div class="drawer-profile-label">NICKNAME</div>
+                        <div class="drawer-profile-value" id="drawer-profile-name">User</div>
+                    </div>
+                </div>
+                <div class="drawer-profile-item">
+                    <div class="drawer-profile-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="drawer-profile-info">
+                        <div class="drawer-profile-label">Member Since</div>
+                        <div class="drawer-profile-value" id="drawer-profile-joined">Today</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="drawer-section">
+                <div class="drawer-section-title">
+                    <i class="fas fa-chart-line"></i>
+                    Your Statistics
+                </div>
+                <div class="drawer-stat-grid">
+                    <div class="drawer-stat-item">
+                        <span class="drawer-stat-value" id="drawer-registrations">0</span>
+                        <span class="drawer-stat-label">Registrations</span>
+                    </div>
+                    <div class="drawer-stat-item">
+                        <span class="drawer-stat-value">₹<span id="drawer-this-week">0</span></span>
+                        <span class="drawer-stat-label">This Week</span>
+                    </div>
+                    <div class="drawer-stat-item">
+                        <span class="drawer-stat-value" id="drawer-status">❌</span>
+                        <span class="drawer-stat-label">Status</span>
+                    </div>
+                    <div class="drawer-stat-item">
+                        <span class="drawer-stat-value" id="drawer-success-rate">0%</span>
+                        <span class="drawer-stat-label">Success Rate</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="drawer-section">
+                <div class="drawer-section-title">
+                    <i class="fas fa-history"></i>
+                    Registration History
+                </div>
+                <div class="drawer-history-list" id="drawer-history-list">
+                    <div style="text-align: center; color: #636e72; padding: 20px;">
+                        <div style="font-size: 40px; margin-bottom: 12px;">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <div style="font-size: 14px; font-weight: 600;">No history yet</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="drawer-logout-btn" onclick="handleLogout()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">
+                <i class="fas fa-times"></i>
+            </span>
+            <div class="modal-title" id="modal-title">
+                <i class="fas fa-info-circle"></i> Modal Title
+            </div>
+            <div class="modal-body" id="modal-body">Modal content here...</div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.22.0/firebase-app-compat.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.22.0/firebase-database-compat.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.22.0/firebase-auth-compat.min.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAxdxcKJiJU5pU06mjYHxOPW3_SZeopcG4",
+            authDomain: "free-fire-turnament-1d93f.firebaseapp.com",
+            databaseURL: "https://free-fire-turnament-1d93f-default-rtdb.firebaseio.com",
+            projectId: "free-fire-turnament-1d93f",
+            storageBucket: "free-fire-turnament-1d93f.firebasestorage.app",
+            messagingSenderId: "8052881561",
+            appId: "1:8052881561:web:c2eeaa92caa8ade7c02008",
+            measurementId: "G-7XDRTX3TC5"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const auth = firebase.auth();
+
+        let userData = {
+            email: '',
+            name: '',
+            displayName: '',
+            totalEarnings: 0,
+            balance: 0,
+            registrationHistory: [],
+            isRegisteredThisWeek: false,
+            joinedDate: '',
+            uid: ''
+        };
+
+        let systemData = {
+            isActive: true,
+            maxUsers: 5,
+            activeDay: 6,
+            registeredEmails: []
+        };
+
+        let isRegistering = false;
+
+        window.addEventListener('online', () => {
+            document.getElementById('offline-banner').classList.remove('show');
+        });
+
+        window.addEventListener('offline', () => {
+            document.getElementById('offline-banner').classList.add('show');
+        });
+
+        function toggleDrawer() {
+            const drawer = document.getElementById('drawer');
+            const overlay = document.getElementById('drawer-overlay');
+            
+            drawer.classList.toggle('open');
+            overlay.classList.toggle('show');
+            
+            if (drawer.classList.contains('open')) {
+                updateDrawerData();
+            }
+        }
+
+        function updateDrawerData() {
+            const displayName = userData.displayName || userData.name;
+            document.getElementById('drawer-user-name').textContent = displayName.charAt(0).toUpperCase() + displayName.slice(1);
+            document.getElementById('drawer-user-email').textContent = userData.email;
+            document.getElementById('drawer-total-earnings-main').textContent = userData.totalEarnings;
+            document.getElementById('drawer-balance-main').textContent = userData.balance;
+            document.getElementById('drawer-profile-email').textContent = userData.email;
+            document.getElementById('drawer-profile-name').textContent = displayName.charAt(0).toUpperCase() + displayName.slice(1);
+            document.getElementById('drawer-registrations').textContent = userData.registrationHistory.length;
+            document.getElementById('drawer-this-week').textContent = userData.isRegisteredThisWeek ? '10' : '0';
+            document.getElementById('drawer-status').innerHTML = userData.isRegisteredThisWeek ? '<i class="fas fa-check-circle" style="color: #00b894;"></i>' : '<i class="fas fa-times-circle" style="color: #e74c3c;"></i>';
+            
+            const successRate = userData.registrationHistory.length > 0 ? 100 : 0;
+            document.getElementById('drawer-success-rate').textContent = `${successRate}%`;
+            
+            if (userData.joinedDate) {
+                const joinedDate = new Date(userData.joinedDate);
+                document.getElementById('drawer-profile-joined').textContent = joinedDate.toLocaleDateString();
+            } else {
+                document.getElementById('drawer-profile-joined').textContent = 'Today';
+            }
+            
+            const drawerHistoryList = document.getElementById('drawer-history-list');
+            
+            if (userData.registrationHistory.length === 0) {
+                drawerHistoryList.innerHTML = `
+                    <div style="text-align: center; color: #636e72; padding: 20px;">
+                        <div style="font-size: 40px; margin-bottom: 12px;">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <div style="font-size: 14px; font-weight: 600;">No history yet</div>
+                    </div>
+                `;
+                return;
+            }
+
+            drawerHistoryList.innerHTML = userData.registrationHistory
+                .slice(-10)
+                .reverse()
+                .map((item) => `
+                    <div class="drawer-history-item">
+                        <div class="drawer-history-date">
+                            <i class="fas fa-calendar"></i>
+                            ${item.date || new Date(item.timestamp).toLocaleDateString()} - ${item.time}
+                        </div>
+                        <div class="drawer-history-amount">
+                            <i class="fas fa-rupee-sign"></i>
+                            ${item.earning || 10}
+                        </div>
+                    </div>
+                `).join('');
+        }
+
+        function togglePassword() {
+            const passwordInput = document.getElementById('login-password');
+            const toggleIcon = document.getElementById('toggle-icon');
+            const toggleText = document.getElementById('toggle-text');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.className = 'fas fa-eye-slash';
+                toggleText.textContent = 'Hide';
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.className = 'fas fa-eye';
+                toggleText.textContent = 'Show';
+            }
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value;
+            const rememberMe = document.getElementById('remember-me').checked;
+            const loginBtn = document.getElementById('login-btn');
+            const errorDiv = document.getElementById('login-error');
+            const successDiv = document.getElementById('login-success');
+            
+            errorDiv.style.display = 'none';
+            successDiv.style.display = 'none';
+            
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<span class="btn-spinner"></span> <i class="fas fa-spinner fa-spin"></i> Logging in...';
+            
+            try {
+                if (rememberMe) {
+                    await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+                } else {
+                    await auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
+                }
+
+                const userCredential = await auth.signInWithEmailAndPassword(email, password);
+                const user = userCredential.user;
+                
+                successDiv.innerHTML = '<i class="fas fa-check-circle"></i> Login successful! Redirecting...';
+                successDiv.style.display = 'block';
+                
+                setTimeout(() => {
+                    showDashboard(user);
+                }, 1000);
+                
+            } catch (error) {
+                let errorMessage = 'Login failed. Please try again.';
+                
+                if (error.code === 'auth/user-not-found') {
+                    errorMessage = '<i class="fas fa-exclamation-circle"></i> No account found with this email. Please contact admin.';
+                } else if (error.code === 'auth/wrong-password') {
+                    errorMessage = '<i class="fas fa-exclamation-circle"></i> Incorrect password. Please try again.';
+                } else if (error.code === 'auth/invalid-email') {
+                    errorMessage = '<i class="fas fa-exclamation-circle"></i> Invalid email address format.';
+                } else if (error.code === 'auth/too-many-requests') {
+                    errorMessage = '<i class="fas fa-exclamation-circle"></i> Too many failed attempts. Please try again later.';
+                } else if (error.code === 'auth/network-request-failed') {
+                    errorMessage = '<i class="fas fa-exclamation-circle"></i> Network error. Please check your internet connection.';
+                }
+                
+                errorDiv.innerHTML = errorMessage;
+                errorDiv.style.display = 'block';
+                
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
+            }
+        }
+
+        function showDashboard(user) {
+            userData.email = user.email;
+            userData.name = user.email.split('@')[0];
+            userData.displayName = user.displayName || userData.name;
+            userData.uid = user.uid;
+            
+            document.getElementById('loading-overlay').classList.add('show');
+            
+            setTimeout(() => {
+                document.getElementById('login-container').style.display = 'none';
+                document.getElementById('dashboard-container').style.display = 'block';
+                document.getElementById('user-email-display').textContent = userData.email;
+                const displayName = userData.displayName || userData.name;
+                document.getElementById('user-name').textContent = displayName.charAt(0).toUpperCase() + displayName.slice(1);
+                
+                loadUserData();
+                setupRealtimeListeners();
+                updateCountdown();
+                setInterval(updateCountdown, 1000);
+                
+                saveUserAccess(userData.email, userData.uid);
+                
+                document.getElementById('loading-overlay').classList.remove('show');
+            }, 1500);
+        }
+
+        function loadUserData() {
+            const userRef = database.ref('users/' + userData.uid);
+            
+            userRef.once('value', (snapshot) => {
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    userData.totalEarnings = data.totalEarnings || 0;
+                    userData.balance = data.balance || 0;
+                    userData.registrationHistory = data.registrationHistory || [];
+                    userData.joinedDate = data.joinedDate || new Date().toISOString();
+                    userData.displayName = data.displayName || userData.displayName;
+                    updateUserStats();
+                } else {
+                    const newUserData = {
+                        email: userData.email,
+                        displayName: userData.displayName,
+                        totalEarnings: 0,
+                        balance: 0,
+                        registrationHistory: [],
+                        joinedDate: new Date().toISOString()
+                    };
+                    userRef.set(newUserData);
+                }
+            }).catch((error) => {
+                showNotification('<i class="fas fa-exclamation-triangle"></i> Error loading user data', 'error');
+            });
+        }
+
+        async function handleLogout() {
+            try {
+                await auth.signOut();
+                
+                const drawer = document.getElementById('drawer');
+                const overlay = document.getElementById('drawer-overlay');
+                drawer.classList.remove('open');
+                overlay.classList.remove('show');
+                
+                document.getElementById('dashboard-container').style.display = 'none';
+                document.getElementById('login-container').style.display = 'flex';
+                document.getElementById('login-form').reset();
+                
+                userData = {
+                    email: '',
+                    name: '',
+                    displayName: '',
+                    totalEarnings: 0,
+                    balance: 0,
+                    registrationHistory: [],
+                    isRegisteredThisWeek: false,
+                    joinedDate: '',
+                    uid: ''
+                };
+                
+                showNotification('<i class="fas fa-check-circle"></i> Logged out successfully', 'success');
+            } catch (error) {
+                showModal('<i class="fas fa-times-circle"></i> Logout Failed', 'There was an error logging out. Please try again.');
+            }
+        }
+
+        function saveUserAccess(email, uid) {
+            const accessData = {
+                email: email,
+                uid: uid,
+                lastSeen: new Date().toISOString(),
+                timestamp: new Date().toISOString()
+            };
+            
+            database.ref('activeUsers/' + uid).set(accessData).catch((error) => {});
+        }
+
+        function registerUser() {
+            if (isRegistering) {
+                return;
+            }
+
+            const registerBtn = document.getElementById('register-btn');
+            const currentDay = new Date().getDay();
+            
+            if (currentDay !== systemData.activeDay) {
+                const dayName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][systemData.activeDay];
+                showModal(`<i class="fas fa-calendar-times"></i> Registration Closed`, `Registration is only available on ${dayName}s. Please come back then!`);
+                return;
+            }
+            
+            if (!systemData.isActive) {
+                showModal('<i class="fas fa-pause-circle"></i> System Inactive', 'Registration system is currently disabled by admin. Please try again later.');
+                return;
+            }
+            
+            if (userData.isRegisteredThisWeek) {
+                showModal('<i class="fas fa-check-double"></i> Already Registered', 'You are already registered for this week! You have earned ₹10.');
+                return;
+            }
+            
+            if (systemData.registeredEmails.length >= systemData.maxUsers) {
+                showModal('<i class="fas fa-users-slash"></i> Registration Full', 'All spots are filled for this week. Please try again next week!');
+                return;
+            }
+
+            isRegistering = true;
+            registerBtn.disabled = true;
+            registerBtn.innerHTML = '<span class="btn-spinner"></span> <i class="fas fa-spinner fa-spin"></i> Registering...';
+            
+            const registrationData = {
+                email: userData.email,
+                uid: userData.uid,
+                timestamp: new Date().toISOString(),
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString(),
+                earning: 10
+            };
+            
+            const registrationKey = Date.now() + '_' + userData.uid;
+            
+            database.ref('registrations/today/' + registrationKey).set(registrationData)
+            .then(() => {
+                const newEarnings = userData.totalEarnings + 10;
+                const newBalance = userData.balance + 10;
+                const newHistory = [...userData.registrationHistory, registrationData];
+                
+                return database.ref('users/' + userData.uid).update({
+                    totalEarnings: newEarnings,
+                    balance: newBalance,
+                    registrationHistory: newHistory,
+                    lastRegistration: new Date().toISOString()
+                });
+            })
+            .then(() => {
+                showModal('<i class="fas fa-trophy"></i> Registration Successful!', '<div style="font-size: 50px; margin: 20px 0;"><i class="fas fa-party-horn"></i></div>Congratulations! You have been successfully registered for this week.<br><br><div style="font-size: 32px; color: #00b894; font-weight: 800; margin: 15px 0;"><i class="fas fa-rupee-sign"></i>+10</div><strong>Added to your balance!</strong><br><br>Your registration has been saved and you will be notified about the results.');
+                
+                userData.totalEarnings += 10;
+                userData.balance += 10;
+                userData.registrationHistory.push(registrationData);
+                userData.isRegisteredThisWeek = true;
+                
+                showNotification('<i class="fas fa-check-circle"></i> Registration Successful! +₹10 added to your balance', 'success');
+                
+                updateUserStats();
+                updateDrawerData();
+            })
+            .catch((error) => {
+                showModal('<i class="fas fa-exclamation-triangle"></i> Registration Failed', 'There was an error processing your registration. Please try again.');
+            })
+            .finally(() => {
+                isRegistering = false;
+                registerBtn.disabled = false;
+                registerBtn.innerHTML = '<i class="fas fa-bullseye"></i> Register Now';
+            });
+        }
+
+        function setupRealtimeListeners() {
+            database.ref('settings').on('value', (snapshot) => {
+                if (snapshot.exists()) {
+                    const settings = snapshot.val();
+                    systemData.isActive = settings.isActive !== false;
+                    systemData.maxUsers = settings.maxUsers || 5;
+                    systemData.activeDay = settings.activeDay !== undefined ? settings.activeDay : 6;
+                    updateSystemStatus();
+                }
+            });
+
+            database.ref('registrations/today').on('value', (snapshot) => {
+                systemData.registeredEmails = [];
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    systemData.registeredEmails = Object.values(data);
+                }
+                updateAvailableSpots();
+                checkUserRegistration();
+            });
+
+            database.ref('users/' + userData.uid).on('value', (snapshot) => {
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    userData.totalEarnings = data.totalEarnings || 0;
+                    userData.balance = data.balance || 0;
+                    userData.registrationHistory = data.registrationHistory || [];
+                    userData.joinedDate = data.joinedDate || new Date().toISOString();
+                    userData.displayName = data.displayName || userData.displayName;
+                    updateUserStats();
+                    updateQuickStats();
+                }
+            });
+        }
+
+        function updateSystemStatus() {
+            const indicator = document.getElementById('system-indicator');
+            const text = document.getElementById('system-text');
+            
+            if (systemData.isActive) {
+                indicator.className = 'status-indicator status-active';
+                text.innerHTML = '<i class="fas fa-check-circle"></i> Active';
+            } else {
+                indicator.className = 'status-indicator status-inactive';
+                text.innerHTML = '<i class="fas fa-times-circle"></i> Inactive';
+            }
+        }
+
+        function updateAvailableSpots() {
+            const available = Math.max(0, systemData.maxUsers - systemData.registeredEmails.length);
+            document.getElementById('available-spots').textContent = available;
+            document.getElementById('max-spots').textContent = systemData.maxUsers;
+        }
+
+        function checkUserRegistration() {
+            const userUid = userData.uid;
+            const isRegistered = systemData.registeredEmails.some(item => {
+                const uid = typeof item === 'string' ? item : item.uid;
+                return uid && uid === userUid;
+            });
+
+            userData.isRegisteredThisWeek = isRegistered;
+            
+            const statusIndicator = document.getElementById('status-indicator');
+            const statusText = document.getElementById('status-text');
+            
+            if (isRegistered) {
+                statusIndicator.className = 'status-indicator status-active';
+                statusText.innerHTML = '<i class="fas fa-check-circle"></i> Registered This Week';
+            } else {
+                statusIndicator.className = 'status-indicator status-inactive';
+                statusText.innerHTML = '<i class="fas fa-times-circle"></i> Not Registered';
+            }
+        }
+
+        function updateUserStats() {
+            updateDrawerData();
+        }
+
+        function updateQuickStats() {
+            document.getElementById('total-registrations').textContent = userData.registrationHistory.length;
+            document.getElementById('this-week-earnings').textContent = userData.isRegisteredThisWeek ? '10' : '0';
+            
+            const successRate = userData.registrationHistory.length > 0 ? 100 : 0;
+            document.getElementById('success-rate').textContent = `${successRate}%`;
+            
+            if (userData.registrationHistory.length > 0) {
+                const lastReg = userData.registrationHistory[userData.registrationHistory.length - 1];
+                const lastDate = new Date(lastReg.timestamp);
+                const now = new Date();
+                const diffTime = Math.abs(now - lastDate);
+                const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                
+                if (diffDays === 0) {
+                    document.getElementById('last-registration').textContent = 'Today';
+                } else if (diffDays === 1) {
+                    document.getElementById('last-registration').textContent = 'Yesterday';
+                } else if (diffDays < 7) {
+                    document.getElementById('last-registration').textContent = `${diffDays}d ago`;
+                } else {
+                    document.getElementById('last-registration').textContent = lastDate.toLocaleDateString();
+                }
+            } else {
+                document.getElementById('last-registration').textContent = 'Never';
+            }
+        }
+
+        function updateCountdown() {
+            const now = new Date();
+            const today = now.getDay();
+            
+            let daysUntilActive = (systemData.activeDay - today + 7) % 7;
+            
+            if (daysUntilActive === 0) {
+                const endOfDay = new Date(now);
+                endOfDay.setHours(23, 59, 59, 999);
+                const timeLeftToday = endOfDay - now;
+                
+                if (timeLeftToday > 0) {
+                    const hours = Math.floor(timeLeftToday / (1000 * 60 * 60));
+                    const minutes = Math.floor((timeLeftToday % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((timeLeftToday % (1000 * 60)) / 1000);
+                    
+                    document.getElementById('countdown-timer').innerHTML = `
+                        <div style="color: #00b894; font-size: 26px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 12px;">
+                            <i class="fas fa-fire"></i> Registration is OPEN NOW! <i class="fas fa-fire"></i><br>
+                            <span style="font-size: 20px; margin-top: 15px; display: block; color: #e74c3c;">
+                                <i class="fas fa-clock"></i> Closes in ${hours}h ${minutes}m ${seconds}s
+                            </span>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                daysUntilActive = 7;
+            }
+            
+            const nextActiveDay = new Date(now);
+            nextActiveDay.setDate(now.getDate() + daysUntilActive);
+            nextActiveDay.setHours(0, 0, 0, 0);
+            
+            const timeLeft = nextActiveDay - now;
+
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+
+        function showNotification(message, type = 'info') {
+            const banner = document.getElementById('notification-banner');
+            const text = document.getElementById('notification-text');
+            
+            text.innerHTML = message;
+            banner.style.display = 'flex';
+            
+            if (type === 'success') {
+                banner.style.background = 'linear-gradient(135deg, #00b894, #00cec9)';
+            } else if (type === 'error') {
+                banner.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
+            } else {
+                banner.style.background = 'linear-gradient(135deg, #f39c12, #e67e22)';
+            }
+            
+            setTimeout(() => {
+                banner.style.display = 'none';
+            }, 5000);
+        }
+
+        function showModal(title, content) {
+            document.getElementById('modal-title').innerHTML = title;
+            document.getElementById('modal-body').innerHTML = content;
+            document.getElementById('modal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        function checkStatus() {
+            let statusMessage = '<div style="text-align: left; line-height: 2;">';
+            statusMessage += `<p><i class="fas fa-server"></i> <strong>System Status:</strong> ${systemData.isActive ? '<span style="color: #00b894;"><i class="fas fa-check-circle"></i> Active</span>' : '<span style="color: #e74c3c;"><i class="fas fa-times-circle"></i> Inactive</span>'}</p>`;
+            statusMessage += `<p><i class="fas fa-users"></i> <strong>Available Spots:</strong> ${Math.max(0, systemData.maxUsers - systemData.registeredEmails.length)}/${systemData.maxUsers}</p>`;
+            statusMessage += `<p><i class="fas fa-clipboard-check"></i> <strong>Registration Status:</strong> ${userData.isRegisteredThisWeek ? '<span style="color: #00b894;"><i class="fas fa-check-circle"></i> Registered</span>' : '<span style="color: #e74c3c;"><i class="fas fa-times-circle"></i> Not Registered</span>'}</p>`;
+            statusMessage += `<p><i class="fas fa-sack-dollar"></i> <strong>Total Earnings:</strong> <span style="color: #00b894; font-weight: 800;">₹${userData.totalEarnings}</span></p>`;
+            statusMessage += `<p><i class="fas fa-wallet"></i> <strong>Total Balance:</strong> <span style="color: #f39c12; font-weight: 800;">₹${userData.balance}</span></p>`;
+            statusMessage += `<p><i class="fas fa-calendar-day"></i> <strong>Active Day:</strong> ${['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][systemData.activeDay]}</p>`;
+            statusMessage += '</div>';
+            
+            showModal('<i class="fas fa-info-circle"></i> Current Status', statusMessage);
+        }
+
+        function viewRewards() {
+            let rewardsMessage = '<div style="text-align: center;">';
+            rewardsMessage += `<div style="font-size: 60px; margin-bottom: 20px;"><i class="fas fa-trophy"></i></div>`;
+            rewardsMessage += `<p style="font-size: 42px; font-weight: 800; color: #00b894; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 10px;"><i class="fas fa-rupee-sign"></i>${userData.totalEarnings}</p>`;
+            rewardsMessage += `<p style="margin-bottom: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Total Earnings</p>`;
+            rewardsMessage += `<hr style="margin: 25px 0; border: none; border-top: 3px solid #e0e0e0;">`;
+            rewardsMessage += `<p style="font-size: 32px; font-weight: 800; color: #f39c12; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 10px;"><i class="fas fa-wallet"></i> <i class="fas fa-rupee-sign"></i>${userData.balance}</p>`;
+            rewardsMessage += `<p style="margin-bottom: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Total Balance</p>`;
+            rewardsMessage += `<hr style="margin: 25px 0; border: none; border-top: 3px solid #e0e0e0;">`;
+            rewardsMessage += `<p style="color: #636e72;"><i class="fas fa-info-circle"></i> Each registration earns you ₹10</p>`;
+            rewardsMessage += `<p style="color: #636e72;"><i class="fas fa-clipboard-list"></i> Total Registrations: <strong>${userData.registrationHistory.length}</strong></p>`;
+            rewardsMessage += '</div>';
+            
+            showModal('<i class="fas fa-gift"></i> Your Rewards', rewardsMessage);
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                showDashboard(user);
+            } else {
+                document.getElementById('login-container').style.display = 'flex';
+                document.getElementById('dashboard-container').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
